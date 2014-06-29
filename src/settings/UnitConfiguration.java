@@ -11,10 +11,16 @@ public class UnitConfiguration {
 	public int lineOfSight;
 	public int appearence;
 	public Weapon armament;
+	public Visual_Effect idleEffect;
+	public Visual_Effect walkEffect;
+	public Visual_Effect fireEffect;
 	public Visual_Effect deathEffect;
-	
 
-	public UnitConfiguration(String name, int health, int armor, double speed, int lineOfSight, int appearence, Weapon armament, Visual_Effect deathEffect){
+	public UnitConfiguration(String name, int health, int armor, double speed, int lineOfSight, int appearence, Weapon armament, 
+			Visual_Effect idleEffect,
+			Visual_Effect walkEffect,
+			Visual_Effect fireEffect,
+			Visual_Effect deathEffect){
 		this.name = name;
 		this.health = health;
 		this.armor = armor;
@@ -22,6 +28,9 @@ public class UnitConfiguration {
 		this.lineOfSight = lineOfSight;
 		this.appearence = appearence;
 		this.armament = armament;
+		this.idleEffect = idleEffect;
+		this.walkEffect = walkEffect;
+		this.fireEffect = fireEffect;
 		this.deathEffect = deathEffect;
 	}
 }

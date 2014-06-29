@@ -58,6 +58,7 @@ public class Variables {
 		int types = 1;
 		int height = 100;
 		int width = 100;
+		int directions = 1;
 		if(s != ""){
 		
 			String[] variables = s.split("[\n]");
@@ -73,10 +74,12 @@ public class Variables {
 					types = matchIntVariable(types, "types", s1);
 					width = matchIntVariable(width, "width", s1);
 					height = matchIntVariable(height, "height", s1);
+					directions = matchIntVariable(directions, "directions", s1);
 				}						
 			}
 		}	
-			Visual_Effect config = new Visual_Effect(name, time, types, width, height, imp);			
+			Visual_Effect config = new Visual_Effect(name, time, types, width, height, directions, imp);		
+			//System.out.println(name);
 			effectTypes.add(config);
 		}
 	}
@@ -171,7 +174,6 @@ public class Variables {
 			}
 		}
 	
-
 	public void interpretUnits(){
 		//importAmmo();				
 
@@ -187,12 +189,16 @@ public class Variables {
 		int sightRange = -1;
 			int appearence = -1;
 		String weapon = "";
+		String idleEffect = "";
+		String walkEffect = "";
+		String fireEffect = "";
 		String deathEffect = "";
 			if(s != ""){
 			
 				String[] variables = s.split("[\n]");
 				for(String s1: variables){
 					if(s1 != ""){
+						//System.out.println(s1);
 						//MATCH THE NEW UNIT TYPE NAME
 						if(s1.matches("\\w*]")){
 							name = s1.replaceAll("\\]", "");
@@ -205,17 +211,24 @@ public class Variables {
 						sightRange = matchIntVariable(sightRange, "sightRange", s1);
 						speed = matchDoubleVariable(speed, "speed", s1);
 						weapon = matchStringVariable(weapon, "weapon", s1);
+						idleEffect = matchStringVariable(idleEffect, "idleeffect", s1);
+						walkEffect = matchStringVariable(walkEffect, "walkeffect", s1);
+						fireEffect = matchStringVariable(fireEffect, "fireeffect", s1);
 						deathEffect = matchStringVariable(deathEffect, "deatheffect", s1);
 					}						
 				}
 			}
-				UnitConfiguration config = new UnitConfiguration(name, health, armor, speed, sightRange, appearence, getWeaponType(weapon), getEffectType(deathEffect));
+				UnitConfiguration config = new UnitConfiguration(name, health, armor, speed, sightRange, appearence, getWeaponType(weapon), 
+						getEffectType(idleEffect),
+						getEffectType(walkEffect),
+						getEffectType(fireEffect),
+						getEffectType(deathEffect)
+						);
+				System.out.println(fireEffect);
 				unitTypes.add(config);
 			}
 		}
-	
-
-	
+		
 	public String readLargerTextFile(String aFileName) throws IOException {
 		Charset ENCODING = StandardCharsets.UTF_8;
 	    Path path = Paths.get(aFileName);
@@ -232,13 +245,10 @@ public class Variables {
 	      return stringBuilder.toString();
 	    }
 	  }
-	
-
 		
-
 	public Visual_Effect getEffectType(String name){
 		//System.out.println("Seeking for: " + name);
-		Visual_Effect correct = new Visual_Effect("INVALID AMMO", -1, -1, -1, 0, null);
+		Visual_Effect correct = new Visual_Effect("INVALID AMMO", -1, -1, -1, 0, 0, null);
 		for(Visual_Effect ac : effectTypes){
 			if(ac.name.equals(name)){return ac;}
 		}
@@ -265,7 +275,7 @@ public class Variables {
 	
 	public UnitConfiguration getUnitType(String name){
 		//System.out.println("We are seeking for: " + name);
-		UnitConfiguration correct = new UnitConfiguration(name, 0, 0, 0, 0, 0, null, null);
+		UnitConfiguration correct = new UnitConfiguration(name, 0, 0, 0, 0, 0, null, null, null, null, null);
 		for(UnitConfiguration ac : unitTypes){
 			//System.out.println(ac.name);
 			if(ac.name.equalsIgnoreCase(name)){return ac;}

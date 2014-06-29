@@ -36,11 +36,7 @@ public class Game {
 	
 	
 	public void setupTestCase001(){
-		bs.soldiers.add(new Soldier(390,500, bs, 0, "SOLDIER"));
-		bs.soldiers.add(new Soldier(390,510, bs, 0, "SOLDIER"));
-		bs.soldiers.add(new Soldier(390,520, bs, 0, "SOLDIER"));
-		bs.soldiers.add(new Soldier(390,530, bs, 0, "SOLDIER"));
-		bs.soldiers.add(new Soldier(390,540, bs, 0, "SOLDIER"));		
+		bs.soldiers.add(new Soldier(390,500, bs, 0, "SOLDIER"));		
 		
 		for(int i = 0; i < 30; i++){
 			

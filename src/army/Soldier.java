@@ -30,6 +30,9 @@ public class Soldier extends Unit{
 		lineOfSight = unit.lineOfSight;			
 		appearence = unit.appearence;
 		armament = unit.armament;	
+		idleEffect = unit.idleEffect;
+		walkEffect = unit.walkEffect;
+		fireEffect = unit.fireEffect;
 		deathEffect = unit.deathEffect;
 		
 	}

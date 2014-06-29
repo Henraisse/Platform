@@ -14,6 +14,8 @@ public class Unit {
 	public double lineOfSight;
 	
 	public boolean isDead = false;
+	public boolean isMoving = false;
+	public boolean isFiring = true;
 	
 	public int allegiance;
 	public int appearence;
@@ -22,7 +24,12 @@ public class Unit {
 	
 	public Soldier targetUnit;
 	public Position target;
+	Visual_Effect idleEffect;
+	Visual_Effect walkEffect;
+	Visual_Effect fireEffect;
 	Visual_Effect deathEffect;
+	
+	public int imageounter = 0;
 	int size = 20;
 	
 	public Unit(){}

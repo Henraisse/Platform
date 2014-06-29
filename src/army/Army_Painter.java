@@ -7,6 +7,7 @@ import java.awt.Graphics;
 
 import tools.Position;
 import tools.Statics;
+import tools.Visual_Effect;
 
 public class Army_Painter {
 	Battle_Setup bs;
@@ -32,7 +33,45 @@ public class Army_Painter {
 					(int)bs.projectiles.get(i).target.y);
 		}
 		
-		//DRAW SOLDIERS
+		
+		for(int i = 0; i < bs.soldiers.size(); i++){
+			Soldier s = bs.soldiers.get(i);
+			if(s.isDead == false){
+				double dir = s.pos.minus(s.target).unitDotProduct(new Position(1,0));	// 1 to -1
+				double dir2 = s.pos.minus(s.target).unitDotProduct(new Position(0,1));	// 1 to -1
+				double degrees = (dir-1.0)*(-90.0);		//0 to 180
+				if(dir2 < 0){degrees += 180;}
+				
+				Visual_Effect ef = s.idleEffect;
+				if(s.isMoving){ef = s.walkEffect;}
+				else if(s.isFiring){ef = s.fireEffect;}
+				
+		
+				int cakePartSize = 360/ef.directions;
+				int part = 0;
+				int quadrant = 0;
+				while(part < degrees){
+					part += cakePartSize;
+					quadrant++;
+				}
+					
+				g.drawImage(ef.image.getImage(), 
+						(int)(1+s.pos.x-(ef.width/2)), 
+						(int)(1+s.pos.y-(ef.height/2)),
+						(int)(1+s.pos.x+(ef.width/2)), 
+						(int)(1+s.pos.y+(ef.height/2)),
+				1+((ef.counter)*ef.width), 
+				1+(quadrant*ef.height), 
+				ef.width+((ef.counter)*ef.width)-1, 
+				ef.height+(quadrant * ef.height)-1,	
+				parent
+				);
+				
+			}
+		}
+		
+		
+		//DRAW GENERIC UNITS
 		for(int i = 0; i < bs.soldiers.size(); i++){	
 			if(bs.soldiers.get(i).isDead == false){
 				g.setColor(new Color(0,0,0));

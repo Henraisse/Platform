@@ -12,14 +12,15 @@ public class Visual_Effect {
 
 	public String name;
 	public boolean remove = false;
-	int counter;
-	int types;
-	int width;
-	int height;
-	ImageIcon image;
+	public int counter;
+	public int types;
+	public int width;
+	public int height;
+	public int directions;
+	public ImageIcon image;
 	
 	
-	public Visual_Effect(String name, int time, int types, int width, int height, Image_Pack images){
+	public Visual_Effect(String name, int time, int types, int width, int height, int directions, Image_Pack images){
 		this.name = name;
 		counter = time;
 		this.types = types;
@@ -28,7 +29,7 @@ public class Visual_Effect {
 		if(images != null){
 			setImage(images);
 		}
-		
+		this.directions = directions;
 
 	}
 	

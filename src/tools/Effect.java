@@ -13,6 +13,7 @@ public class Effect {
 	public boolean remove = false;
 	public int width;
 	public int height;
+	public int directions;
 	
 	public Position pos;
 	
@@ -40,6 +41,7 @@ public class Effect {
 				}
 				width = ve.width;
 				height = ve.height;
+				directions = ve.directions;
 			}
 		}
 	}
