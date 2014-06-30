@@ -33,7 +33,7 @@ public class Variables {
 	}
 	
 	public void importConfigFile() {
-		String FILE_NAME = "C:\\Users\\Henraisse\\Desktop\\Military_school\\file.txt";
+		String FILE_NAME = "C:\\Users\\Henrik\\Desktop\\Military_school\\file.txt";
 		try {
 			file = readLargerTextFile(FILE_NAME);
 		} catch (IOException e) {

@@ -39,9 +39,11 @@ public class Unit {
 		if(targetUnit == null){targetUnit = new Soldier(-999999,-999999,battle_setup,-1,"ZOMBIE");}
 		for(Soldier s: battle_setup.soldiers){
 			//System.out.println((int)s.pos.x + ", " + (int)s.pos.y);
-			if(s.pos.distance(pos) < targetUnit.pos.distance(pos)){
-				if(s.allegiance != allegiance && s.health > 0){
-					//System.out.println();
+			if(true){
+				if(
+						(s.pos.distance(pos) < targetUnit.pos.distance(pos) && s.allegiance != allegiance && s.isDead != true) || 
+						(targetUnit.isDead && s.allegiance != allegiance && targetUnit != s)
+				){
 					targetUnit = s;
 				}
 			}

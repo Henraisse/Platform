@@ -17,10 +17,21 @@ public class Army_Painter {
 	}
 	
 	public void paint(Graphics g, Combat_Screen parent) {
-			
+		
+
+		
+		
 		//g.drawLine(100,100, 200, 200);
 		g.setColor(new Color(100, 100, 100));
 		g.fillRect(0, 0, 2000, 2000);
+		
+		int x0 = (int)bs.soldiers.get(0).pos.x;
+		int y0 = (int)bs.soldiers.get(0).pos.y;
+		g.setColor(Color.CYAN);
+		g.drawLine((int)x0 - 1000, (int)y0 - 1000, (int)x0 + 1000, (int)y0 + 1000);
+		g.drawLine((int)x0 + 1000, (int)y0 - 1000, (int)x0 - 1000, (int)y0 + 1000);
+		g.drawLine((int)x0, (int)y0 - 1000, (int)x0, (int)y0 + 1000);
+		g.drawLine((int)x0 - 1000, (int)y0, (int)x0 + 1000, (int)y0);
 		
 		for(int i = 0; i < bs.projectiles.size(); i++){
 			
@@ -36,25 +47,46 @@ public class Army_Painter {
 		
 		for(int i = 0; i < bs.soldiers.size(); i++){
 			Soldier s = bs.soldiers.get(i);
-			if(s.isDead == false){
-				double dir = s.pos.minus(s.target).unitDotProduct(new Position(1,0));	// 1 to -1
-				double dir2 = s.pos.minus(s.target).unitDotProduct(new Position(0,1));	// 1 to -1
-				double degrees = (dir-1.0)*(-90.0);		//0 to 180
-				if(dir2 < 0){degrees += 180;}
+			if(s.isDead == false && s.type == "SOLDIER"){
 				
+
+				
+				double cos = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(1,0));	// 1 to -1
+				double sin = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(0,-1));	// 1 to -1
+				//double degrees = (dir-1.0)*(-90.0);		//0 to 180
+				//if(dir2 > 0){degrees = 360-degrees;}
+				//
+				
+				double degrees = Math.toDegrees(Math.acos(cos));
+				if(sin > 0){
+					degrees = 360-degrees;
+				}
+				System.out.println("degrees: " + degrees);
 				Visual_Effect ef = s.idleEffect;
 				if(s.isMoving){ef = s.walkEffect;}
 				else if(s.isFiring){ef = s.fireEffect;}
 				
 		
 				int cakePartSize = 360/ef.directions;
+				degrees += cakePartSize/2;
+				if(degrees > 360){
+					degrees -= 360;
+				}
+				else if(degrees < 0){
+					degrees += 360;
+				}
 				int part = 0;
 				int quadrant = 0;
+				
 				while(part < degrees){
 					part += cakePartSize;
 					quadrant++;
 				}
-					
+				System.out.println("quadrant: " + quadrant);
+				quadrant--;
+				
+				
+				
 				g.drawImage(ef.image.getImage(), 
 						(int)(1+s.pos.x-(ef.width/2)), 
 						(int)(1+s.pos.y-(ef.height/2)),
@@ -69,6 +101,8 @@ public class Army_Painter {
 				
 			}
 		}
+		
+
 		
 		
 		//DRAW GENERIC UNITS

@@ -44,7 +44,7 @@ public class Soldier extends Unit{
 		if(isDead == true){return;}
 		liveOrDie();
 		//LITE DÅ OCH DÅ SKA ENHETERNA LETA EFTER ETT MÅL
-		if(counter%50 == 0){
+		if(counter%5 == 0){
 			findClosestEnemy();
 			setTarget(targetUnit.pos.x, targetUnit.pos.y);
 		}
