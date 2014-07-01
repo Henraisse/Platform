@@ -25,13 +25,13 @@ public class Army_Painter {
 		g.setColor(new Color(100, 100, 100));
 		g.fillRect(0, 0, 2000, 2000);
 		
-		int x0 = (int)bs.soldiers.get(0).pos.x;
-		int y0 = (int)bs.soldiers.get(0).pos.y;
-		g.setColor(Color.CYAN);
-		g.drawLine((int)x0 - 1000, (int)y0 - 1000, (int)x0 + 1000, (int)y0 + 1000);
-		g.drawLine((int)x0 + 1000, (int)y0 - 1000, (int)x0 - 1000, (int)y0 + 1000);
-		g.drawLine((int)x0, (int)y0 - 1000, (int)x0, (int)y0 + 1000);
-		g.drawLine((int)x0 - 1000, (int)y0, (int)x0 + 1000, (int)y0);
+//		int x0 = (int)bs.soldiers.get(0).pos.x;
+//		int y0 = (int)bs.soldiers.get(0).pos.y;
+//		g.setColor(Color.CYAN);
+//		g.drawLine((int)x0 - 1000, (int)y0 - 1000, (int)x0 + 1000, (int)y0 + 1000);
+//		g.drawLine((int)x0 + 1000, (int)y0 - 1000, (int)x0 - 1000, (int)y0 + 1000);
+//		g.drawLine((int)x0, (int)y0 - 1000, (int)x0, (int)y0 + 1000);
+//		g.drawLine((int)x0 - 1000, (int)y0, (int)x0 + 1000, (int)y0);
 		
 		for(int i = 0; i < bs.projectiles.size(); i++){
 			
@@ -61,7 +61,7 @@ public class Army_Painter {
 				if(sin > 0){
 					degrees = 360-degrees;
 				}
-				System.out.println("degrees: " + degrees);
+				//System.out.println("degrees: " + degrees);
 				Visual_Effect ef = s.idleEffect;
 				if(s.isMoving){ef = s.walkEffect;}
 				else if(s.isFiring){ef = s.fireEffect;}
@@ -82,7 +82,7 @@ public class Army_Painter {
 					part += cakePartSize;
 					quadrant++;
 				}
-				System.out.println("quadrant: " + quadrant);
+				//System.out.println("quadrant: " + quadrant);
 				quadrant--;
 				
 				

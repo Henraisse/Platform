@@ -30,7 +30,7 @@ public class Unit {
 	Visual_Effect deathEffect;
 	
 	public int imageounter = 0;
-	int size = 20;
+	int size = 35;
 	
 	public Unit(){}
 	
