@@ -224,7 +224,7 @@ public class Variables {
 						getEffectType(fireEffect),
 						getEffectType(deathEffect)
 						);
-				System.out.println(fireEffect);
+				//System.out.println(fireEffect);
 				unitTypes.add(config);
 			}
 		}

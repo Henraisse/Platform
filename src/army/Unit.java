@@ -29,7 +29,11 @@ public class Unit {
 	Visual_Effect fireEffect;
 	Visual_Effect deathEffect;
 	
-	public int imageounter = 0;
+	public int fireimagecounter = 0;
+	public int walkimagecounter = 0;
+	public int idleimagecounter = 0;
+	public int imgCount = 0;
+	
 	int size = 35;
 	
 	public Unit(){}
@@ -93,7 +97,11 @@ public class Unit {
 		}
 	}
 	
-
+	public boolean targetIsWithinRange(){
+		if(targetUnit.pos.distance(pos) > armament.range){return false;}
+		return true;
+	}
+	
 }
 
 

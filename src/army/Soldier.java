@@ -43,20 +43,46 @@ public class Soldier extends Unit{
 	public void action(int counter){
 		if(isDead == true){return;}
 		liveOrDie();
+		
 		//LITE DÅ OCH DÅ SKA ENHETERNA LETA EFTER ETT MÅL
 		if(counter%5 == 0){
 			findClosestEnemy();
 			setTarget(targetUnit.pos.x, targetUnit.pos.y);
 		}
-		//ZOMBIER SKA GÅ EMOT SOLDATERNA
-		if(type == "ZOMBIE"){
-
+		
+		if(targetIsWithinRange()){
+			fireimagecounter++;
+			walkimagecounter = 0;
+			idleimagecounter = 0;
+			imgCount = fireimagecounter % fireEffect.counter;
+			
+			if(counter%5 == 0){
+				isFiring = true;
+				isMoving = false;
+				attackTarget();
+			}
+		}
+		else{
 			walkTowardTarget(1.0);
+			walkimagecounter++;
+			fireimagecounter = 0;
+			idleimagecounter = 0;
+			isFiring = false;
+			isMoving = true;
+			imgCount = walkimagecounter % walkEffect.counter;
 		}
-		//SOLDATERNA SKA SKJUTA OM DE ÄR INOM SKOTTHÅLL
-		if(type == "SOLDIER" && counter%15 == 0){
-			attackTarget();
-		}
+		//är målet inom räckhåll?
+			//ja - attackera
+			//nej - gå mot målet
+		//ZOMBIER SKA GÅ EMOT SOLDATERNA
+//		if(type == "ZOMBIE"){
+//
+//			walkTowardTarget(1.0);
+//		}
+//		//SOLDATERNA SKA SKJUTA OM DE ÄR INOM SKOTTHÅLL
+//		if(type == "SOLDIER" && counter%15 == 0){
+//			attackTarget();
+//		}
 		
 	}
 }
