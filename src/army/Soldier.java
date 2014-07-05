@@ -15,7 +15,9 @@ public class Soldier extends Unit{
 		this.allegiance = team;
 		this.battle_setup = bs;
 		pos = new Position(x,y);
-
+		addToMapGrid();
+		//targetUnit = new Soldier(pos.x, -99999, bs, -1, "ZOMBIE");
+		//starget = new Position(pos.x, -99999);
 		
 		setSpecs(type);
 	}
@@ -23,10 +25,13 @@ public class Soldier extends Unit{
 	private void setSpecs(String type) {
 		UnitConfiguration unit = battle_setup.variables.getUnitType(type);
 
+		
+		
 		health = unit.health;
 		initialhealth = health;
 		armor = unit.armor;
 		speed = unit.speed;
+		size = unit.size;
 		lineOfSight = unit.lineOfSight;			
 		appearence = unit.appearence;
 		armament = unit.armament;	
@@ -47,7 +52,6 @@ public class Soldier extends Unit{
 		//LITE DÅ OCH DÅ SKA ENHETERNA LETA EFTER ETT MÅL
 		if(counter%5 == 0){
 			findClosestEnemy();
-			setTarget(targetUnit.pos.x, targetUnit.pos.y);
 		}
 		
 		if(targetIsWithinRange()){
@@ -62,7 +66,7 @@ public class Soldier extends Unit{
 				attackTarget();
 			}
 		}
-		else{
+		else if(targetUnit != null){
 			walkTowardTarget(1.0);
 			walkimagecounter++;
 			fireimagecounter = 0;
@@ -71,18 +75,12 @@ public class Soldier extends Unit{
 			isMoving = true;
 			imgCount = walkimagecounter % walkEffect.counter;
 		}
-		//är målet inom räckhåll?
-			//ja - attackera
-			//nej - gå mot målet
-		//ZOMBIER SKA GÅ EMOT SOLDATERNA
-//		if(type == "ZOMBIE"){
-//
-//			walkTowardTarget(1.0);
-//		}
-//		//SOLDATERNA SKA SKJUTA OM DE ÄR INOM SKOTTHÅLL
-//		if(type == "SOLDIER" && counter%15 == 0){
-//			attackTarget();
-//		}
+		
+		else{
+			isFiring = false;
+			isMoving = false;
+		}
+
 		
 	}
 }

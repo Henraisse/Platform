@@ -1,6 +1,7 @@
 package army;
 
 
+import game.Map;
 import gui.Image_Pack;
 
 import java.util.ArrayList;
@@ -13,18 +14,19 @@ public class Battle_Setup {
 	
 	
 	public Variables variables;
-	
+	public Map map;
 	
 	int[] teams = new int[2];
 	public ArrayList<Soldier> soldiers;
 	public ArrayList<Projectile> projectiles;
 	public ArrayList<Effect> effects;
 	
-	public Battle_Setup(Image_Pack imp){		
+	public Battle_Setup(Image_Pack imp, Map mappi){		
 		variables = new Variables(this, imp);
 		soldiers = new ArrayList<Soldier>();
 		projectiles = new ArrayList<Projectile>();
 		effects = new ArrayList<Effect>();
+		map = mappi;
 	}
 	
 	public void simulationStep(int counter){

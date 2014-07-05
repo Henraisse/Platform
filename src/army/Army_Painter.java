@@ -40,12 +40,20 @@ public class Army_Painter {
 		
 		for(int i = 0; i < bs.soldiers.size(); i++){
 			Soldier s = bs.soldiers.get(i);
-			if(s.isDead == false && s.type == "SOLDIER"){
+			if(s.isDead == false){
 				
-
+				double cos = 0.0;
+				double sin = -1.0;
 				
-				double cos = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(1,0));	// 1 to -1
-				double sin = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(0,-1));	// 1 to -1
+				if(s.targetUnit != null){
+					cos = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(1,0));	// 1 to -1
+					sin = s.targetUnit.pos.minus(s.pos).unitDotProduct(new Position(0,-1));	// 1 to -1
+				}
+				
+				else if(s.target != null){
+					cos = s.target.minus(s.pos).unitDotProduct(new Position(1,0));	// 1 to -1
+					sin = s.target.minus(s.pos).unitDotProduct(new Position(0,-1));	// 1 to -1
+				}
 				//double degrees = (dir-1.0)*(-90.0);		//0 to 180
 				//if(dir2 > 0){degrees = 360-degrees;}
 				//
@@ -54,12 +62,12 @@ public class Army_Painter {
 				if(sin > 0){
 					degrees = 360-degrees;
 				}
-				//System.out.println("degrees: " + degrees);
 				Visual_Effect ef = s.idleEffect;
-				//System.out.println(ef.name);
 				if(s.isMoving){ef = s.walkEffect;}
 				else if(s.isFiring){ef = s.fireEffect;}
-				
+//				if(ef.name.equals("SOLDIER_01_IDLE")){
+//					System.out.println("is idling");
+//				}
 		
 				int cakePartSize = 360/ef.directions;
 				degrees += cakePartSize/2;
@@ -101,18 +109,18 @@ public class Army_Painter {
 		
 		
 		//DRAW GENERIC UNITS
-		for(int i = 0; i < bs.soldiers.size(); i++){	
-			if(bs.soldiers.get(i).isDead == false){
-				g.setColor(new Color(0,0,0));
-				g.drawRect((int)bs.soldiers.get(i).pos.x, (int)bs.soldiers.get(i).pos.y, 3, 3);			
-			}
-			else{
-				g.setColor(new Color(255,0,0));
-				g.drawRect((int)bs.soldiers.get(i).pos.x+1, (int)bs.soldiers.get(i).pos.y+1, 1, 1);
-				g.drawRect((int)bs.soldiers.get(i).pos.x, (int)bs.soldiers.get(i).pos.y, 3, 3);	
-				g.drawRect((int)bs.soldiers.get(i).pos.x-1, (int)bs.soldiers.get(i).pos.y-1, 5, 5);	
-			}
-		}
+//		for(int i = 0; i < bs.soldiers.size(); i++){	
+//			if(bs.soldiers.get(i).isDead == false){
+//				g.setColor(new Color(0,0,0));
+//				g.drawRect((int)bs.soldiers.get(i).pos.x, (int)bs.soldiers.get(i).pos.y, 3, 3);			
+//			}
+//			else{
+//				g.setColor(new Color(255,0,0));
+//				g.drawRect((int)bs.soldiers.get(i).pos.x+1, (int)bs.soldiers.get(i).pos.y+1, 1, 1);
+//				g.drawRect((int)bs.soldiers.get(i).pos.x, (int)bs.soldiers.get(i).pos.y, 3, 3);	
+//				g.drawRect((int)bs.soldiers.get(i).pos.x-1, (int)bs.soldiers.get(i).pos.y-1, 5, 5);	
+//			}
+//		}
 		
 		//DRAW EFFECTS
 		for(int i = 0; i < bs.effects.size(); i++){

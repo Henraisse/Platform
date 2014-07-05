@@ -17,11 +17,11 @@ public class Game {
 	public Image_Pack imp;
 	public Battle_Setup bs;
 	public ArrayList<Player> players = new ArrayList<Player>();
-	public Map map = new Map(1600, 1000);
+	public Map map = new Map(1600, 1000, 50);
 	
 	public Game(String filepath){
 		imp = new Image_Pack(filepath);
-		bs = new Battle_Setup(imp);
+		bs = new Battle_Setup(imp, map);
 		
 		setupTestCase001();
 	}
@@ -38,7 +38,7 @@ public class Game {
 	public void setupTestCase001(){
 		bs.soldiers.add(new Soldier(390,500, bs, 0, "SOLDIER"));		
 		
-		for(int i = 0; i < 30; i++){
+		for(int i = 0; i < 40; i++){
 			
 			Position zPos = new Position(0,0);
 			zPos.randomize(map.dimension.x, map.dimension.y);

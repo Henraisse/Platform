@@ -188,6 +188,7 @@ public class Variables {
 		double speed = -1;
 		int sightRange = -1;
 			int appearence = -1;
+			int size = 10;
 		String weapon = "";
 		String idleEffect = "";
 		String walkEffect = "";
@@ -215,10 +216,11 @@ public class Variables {
 						walkEffect = matchStringVariable(walkEffect, "walkeffect", s1);
 						fireEffect = matchStringVariable(fireEffect, "fireeffect", s1);
 						deathEffect = matchStringVariable(deathEffect, "deatheffect", s1);
+						size = matchIntVariable(size, "size", s1);
 					}						
 				}
 			}
-				UnitConfiguration config = new UnitConfiguration(name, health, armor, speed, sightRange, appearence, getWeaponType(weapon), 
+				UnitConfiguration config = new UnitConfiguration(name, health, armor, speed, size, sightRange, appearence, getWeaponType(weapon), 
 						getEffectType(idleEffect),
 						getEffectType(walkEffect),
 						getEffectType(fireEffect),
@@ -275,7 +277,7 @@ public class Variables {
 	
 	public UnitConfiguration getUnitType(String name){
 		//System.out.println("We are seeking for: " + name);
-		UnitConfiguration correct = new UnitConfiguration(name, 0, 0, 0, 0, 0, null, null, null, null, null);
+		UnitConfiguration correct = new UnitConfiguration(name, 0, 0, 0, 0, 0,0, null, null, null, null, null);
 		for(UnitConfiguration ac : unitTypes){
 			//System.out.println(ac.name);
 			if(ac.name.equalsIgnoreCase(name)){return ac;}
