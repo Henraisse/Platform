@@ -40,7 +40,7 @@ public class Unit {
 	public int imgCount = 0;
 	
 	int size;
-	int sight = 300;
+	int sight = 10000;
 	
 	public Unit(){}
 	

@@ -20,13 +20,16 @@ public class Battle_Setup {
 	public ArrayList<Soldier> soldiers;
 	public ArrayList<Projectile> projectiles;
 	public ArrayList<Effect> effects;
+	public String path;
 	
-	public Battle_Setup(Image_Pack imp, Map mappi){		
+	public Battle_Setup(Image_Pack imp, Map mappi, String path){		
+		this.path = path;
 		variables = new Variables(this, imp);
 		soldiers = new ArrayList<Soldier>();
 		projectiles = new ArrayList<Projectile>();
 		effects = new ArrayList<Effect>();
 		map = mappi;
+		
 	}
 	
 	public void simulationStep(int counter){

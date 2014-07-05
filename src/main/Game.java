@@ -21,7 +21,7 @@ public class Game {
 	
 	public Game(String filepath){
 		imp = new Image_Pack(filepath);
-		bs = new Battle_Setup(imp, map);
+		bs = new Battle_Setup(imp, map, filepath);
 		
 		setupTestCase001();
 	}
