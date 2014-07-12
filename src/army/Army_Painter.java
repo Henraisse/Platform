@@ -37,8 +37,46 @@ public class Army_Painter {
 					(int)bs.projectiles.get(i).target.y);
 		}
 		
+		//DRAW UNIT SELECTIONS
+		for(int i = 0; i < bs.soldiers.size(); i++){
+			if(bs.soldiers.get(i).isDead == false && bs.soldiers.get(i).selected == true){
+			Soldier cs = bs.soldiers.get(i);
+			Position leftTop = cs.pos.plus(new Position(-(cs.size/2),-(cs.size/2)));
+			Position rightTop = cs.pos.plus(new Position((cs.size/2),-(cs.size/2)));
+			Position leftBottom = cs.pos.plus(new Position(-(cs.size/2),(cs.size/2)));
+			Position rightBottom = cs.pos.plus(new Position((cs.size/2),(cs.size/2)));
+			
+			Position widthInc = new Position((cs.size/5),0);
+			Position heightInc = new Position(0,(cs.size/5));
+			Position hBar = new Position(0, 5);
+			
+			g.setColor(new Color(255,255,255));
+			
+			g.drawLine((int)rightTop.x, (int)rightTop.y, (int)rightTop.minus(widthInc).x, (int)rightTop.minus(widthInc).y);
+			g.drawLine((int)leftTop.x, (int)leftTop.y, (int)leftTop.plus(widthInc).x, (int)leftTop.plus(widthInc).y);						
+			
+			g.drawLine((int)rightBottom.x, (int)rightBottom.y, (int)rightBottom.minus(widthInc).x, (int)rightBottom.minus(widthInc).y);
+			g.drawLine((int)leftBottom.x, (int)leftBottom.y, (int)leftBottom.plus(widthInc).x, (int)leftBottom.plus(widthInc).y);
+			
+			g.drawLine((int)rightTop.x, (int)rightTop.y, (int)rightTop.plus(heightInc).x, (int)rightTop.plus(heightInc).y);
+			g.drawLine((int)rightBottom.x, (int)rightBottom.y, (int)rightBottom.minus(heightInc).x, (int)rightBottom.minus(heightInc).y);		
+			
+			g.drawLine((int)leftTop.x, (int)leftTop.y, (int)leftTop.plus(heightInc).x, (int)leftTop.plus(heightInc).y);
+			g.drawLine((int)leftBottom.x, (int)leftBottom.y, (int)leftBottom.minus(heightInc).x, (int)leftBottom.minus(heightInc).y);		
+			
+			g.drawRect((int)leftTop.x, (int)leftTop.y-(Statics.healthBarThickness+1), cs.size, Statics.healthBarThickness+1);
+			g.setColor(getHealthColor(cs));
+			g.fillRect((int)leftTop.x+1, (int)(leftTop.y-Statics.healthBarThickness), (int)((double)(cs.size-1)*getHealthBarLength(cs)), Statics.healthBarThickness);
+			g.setColor(Color.BLACK);
+			g.fillRect((int) ((int)leftTop.x+1+(double)(cs.size-1)*getHealthBarLength(cs)), (int)(leftTop.y-Statics.healthBarThickness), (int)((double)(cs.size-1)-(cs.size-1)*getHealthBarLength(cs)), Statics.healthBarThickness);
+			//rita upp en box runtom
+			//rita upp health bar
+			}
+		}
 		
 		for(int i = 0; i < bs.soldiers.size(); i++){
+			Visual_Effect ef = null;
+			try{
 			Soldier s = bs.soldiers.get(i);
 			if(s.isDead == false){
 				
@@ -62,7 +100,7 @@ public class Army_Painter {
 				if(sin > 0){
 					degrees = 360-degrees;
 				}
-				Visual_Effect ef = s.idleEffect;
+				ef = s.idleEffect;
 				if(s.isMoving){ef = s.walkEffect;}
 				else if(s.isFiring){ef = s.fireEffect;}
 //				if(ef.name.equals("SOLDIER_01_IDLE")){
@@ -103,6 +141,10 @@ public class Army_Painter {
 				);
 				
 			}
+			}
+			catch(ArithmeticException e){
+				System.out.println("PAINT ERROR: Perhaps no instance of some certain " + ef.name + " present in rules.ini?");
+			}
 		}
 		
 
@@ -130,49 +172,17 @@ public class Army_Painter {
 					(int)(1+bs.effects.get(i).pos.x+bs.effects.get(i).width-(bs.effects.get(i).width/2)), 
 					(int)(1+bs.effects.get(i).pos.y+bs.effects.get(i).height-(bs.effects.get(i).height/2)),
 			1+((bs.effects.get(i).count-bs.effects.get(i).timer)*bs.effects.get(i).width), 
-			1+(bs.effects.get(i).type*bs.effects.get(i).height), 
+			1+((bs.effects.get(i).type-1)*bs.effects.get(i).height), 
 			bs.effects.get(i).width+((bs.effects.get(i).count-bs.effects.get(i).timer)*bs.effects.get(i).width)-1, 
-			bs.effects.get(i).height+(bs.effects.get(i).type*bs.effects.get(i).height)-1,	
+			bs.effects.get(i).height+((bs.effects.get(i).type-1)*bs.effects.get(i).height)-1,	
 			parent
 			);
 
 		}
 		
-		//DRAW UNIT SELECTIONS
-		for(int i = 0; i < bs.soldiers.size(); i++){
-			Soldier cs = bs.soldiers.get(i);
-			Position leftTop = cs.pos.plus(new Position(-(cs.size/2),-(cs.size/2)));
-			Position rightTop = cs.pos.plus(new Position((cs.size/2),-(cs.size/2)));
-			Position leftBottom = cs.pos.plus(new Position(-(cs.size/2),(cs.size/2)));
-			Position rightBottom = cs.pos.plus(new Position((cs.size/2),(cs.size/2)));
-			
-			Position widthInc = new Position((cs.size/5),0);
-			Position heightInc = new Position(0,(cs.size/5));
-			Position hBar = new Position(0, 5);
-			
-			g.setColor(new Color(255,255,255));
-			
-			g.drawLine((int)rightTop.x, (int)rightTop.y, (int)rightTop.minus(widthInc).x, (int)rightTop.minus(widthInc).y);
-			g.drawLine((int)leftTop.x, (int)leftTop.y, (int)leftTop.plus(widthInc).x, (int)leftTop.plus(widthInc).y);						
-			
-			g.drawLine((int)rightBottom.x, (int)rightBottom.y, (int)rightBottom.minus(widthInc).x, (int)rightBottom.minus(widthInc).y);
-			g.drawLine((int)leftBottom.x, (int)leftBottom.y, (int)leftBottom.plus(widthInc).x, (int)leftBottom.plus(widthInc).y);
-			
-			g.drawLine((int)rightTop.x, (int)rightTop.y, (int)rightTop.plus(heightInc).x, (int)rightTop.plus(heightInc).y);
-			g.drawLine((int)rightBottom.x, (int)rightBottom.y, (int)rightBottom.minus(heightInc).x, (int)rightBottom.minus(heightInc).y);		
-			
-			g.drawLine((int)leftTop.x, (int)leftTop.y, (int)leftTop.plus(heightInc).x, (int)leftTop.plus(heightInc).y);
-			g.drawLine((int)leftBottom.x, (int)leftBottom.y, (int)leftBottom.minus(heightInc).x, (int)leftBottom.minus(heightInc).y);		
-			
-			g.drawRect((int)leftTop.x, (int)leftTop.y-(Statics.healthBarThickness+1), cs.size, Statics.healthBarThickness+1);
-			g.setColor(getHealthColor(cs));
-			g.fillRect((int)leftTop.x+1, (int)(leftTop.y-Statics.healthBarThickness), (int)((double)(cs.size-1)*getHealthBarLength(cs)), Statics.healthBarThickness);
-			g.setColor(Color.BLACK);
-			g.fillRect((int) ((int)leftTop.x+1+(double)(cs.size-1)*getHealthBarLength(cs)), (int)(leftTop.y-Statics.healthBarThickness), (int)((double)(cs.size-1)-(cs.size-1)*getHealthBarLength(cs)), Statics.healthBarThickness);
-			//rita upp en box runtom
-			//rita upp health bar
+		//DRAW SELECTIONS
+		
 
-		}
 		
 	}
 

@@ -8,6 +8,7 @@ import tools.Visual_Effect;
 public class Soldier extends Unit{
 		public String type;
 		int team = -1;
+		public boolean selected = false;
 	
 	public Soldier(double x, double y, Battle_Setup bs, int team, String type){
 		this.type = type;
