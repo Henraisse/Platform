@@ -181,6 +181,22 @@ public class Army_Painter {
 		}
 		
 		//DRAW SELECTIONS
+		g.setColor(Color.GREEN);
+		if(bs.game.players.get(0).mouseDown == true && bs.game.players.get(0).mouseSelection == true){
+			Position difference = bs.game.players.get(0).mouseDownPos.minus(bs.game.players.get(0).mousePos);
+			int length = (int) -difference.x;
+			int height = (int) -difference.y;
+			//g.drawRect((int)bs.game.players.get(0).mouseDownPos.x, (int)bs.game.players.get(0).mouseDownPos.y, length, height);
+		
+		
+			g.drawLine((int)bs.game.players.get(0).mouseDownPos.x, (int)bs.game.players.get(0).mouseDownPos.y, (int)bs.game.players.get(0).mouseDownPos.x, (int) bs.game.players.get(0).mousePos.y);
+			g.drawLine((int)bs.game.players.get(0).mouseDownPos.x, (int)bs.game.players.get(0).mouseDownPos.y, (int) bs.game.players.get(0).mousePos.x, (int)bs.game.players.get(0).mouseDownPos.y);
+			
+			g.drawLine((int)bs.game.players.get(0).mouseDownPos.x+length, (int)bs.game.players.get(0).mouseDownPos.y, (int)bs.game.players.get(0).mouseDownPos.x+length, (int) bs.game.players.get(0).mousePos.y);
+			g.drawLine((int)bs.game.players.get(0).mouseDownPos.x, (int)bs.game.players.get(0).mouseDownPos.y+height, (int) bs.game.players.get(0).mousePos.x, (int)bs.game.players.get(0).mouseDownPos.y+height);
+
+		}
+
 		
 
 		

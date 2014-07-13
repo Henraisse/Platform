@@ -60,6 +60,7 @@ public class Game {
 			
 			//IF WE SELECT A CERTAIN AREA
 			if(p.mouseDownButton == MouseEvent.BUTTON1 && p.mouseDownPos.distance(p.mouseUpPos) > 4){
+				p.mouseSelection = true;
 				//selection of soldiers is done
 				for(Soldier s: bs.soldiers){
 					if(i == s.allegiance){
@@ -72,6 +73,9 @@ public class Game {
 					}
 				}
 				
+			}
+			else{
+				p.mouseSelection = false;
 			}
 		}
 	}

@@ -19,31 +19,42 @@ public class Combat_Screen extends JPanel{
 	Battle_Setup battleSetup;
 	Army_Painter ap;
 	
+	MouseAdapter mouseListener = new MouseAdapter() {		
+        @Override
+        public void mousePressed(MouseEvent e) {
+            //om musen trycks
+        	battleSetup.game.players.get(0).mouseDown = true;
+        	battleSetup.game.players.get(0).mouseDownPos.x = e.getX();
+        	battleSetup.game.players.get(0).mouseDownPos.y = e.getY();
+        	battleSetup.game.players.get(0).mouseDownButton = e.getButton();
+        	battleSetup.game.players.get(0).mousePos.x = e.getX();
+        	battleSetup.game.players.get(0).mousePos.y = e.getY();  
+        	//hämta den nuvarande spelaren
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+            //om musen släpps
+        	battleSetup.game.players.get(0).mouseUp = true;
+        	battleSetup.game.players.get(0).mouseUpPos.x = e.getX();
+        	battleSetup.game.players.get(0).mouseUpPos.y = e.getY();            	
+        }
+               
+        @Override
+        public void mouseDragged(MouseEvent e){
+        	battleSetup.game.players.get(0).mousePos.x = e.getX();
+        	battleSetup.game.players.get(0).mousePos.y = e.getY();  
+        	System.out.println(battleSetup.game.players.get(0).mousePos.x + ", " + battleSetup.game.players.get(0).mousePos.y + " DRAGGED");
+        }               
+    };
+	
+    
 	public Combat_Screen(Image_Pack images, Battle_Setup bs){
 		this.images = images;
 		battleSetup = bs;
 		ap = new Army_Painter(bs);
-		addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                //om musen trycks
-            	battleSetup.game.players.get(0).mouseDown = true;
-            	battleSetup.game.players.get(0).mouseDownPos.x = e.getX();
-            	battleSetup.game.players.get(0).mouseDownPos.y = e.getY();
-            	battleSetup.game.players.get(0).mouseDownButton = e.getButton();
-            	//hämta den nuvarande spelaren
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                //om musen släpps
-            	battleSetup.game.players.get(0).mouseUp = true;
-            	battleSetup.game.players.get(0).mouseUpPos.x = e.getX();
-            	battleSetup.game.players.get(0).mouseUpPos.y = e.getY();
-            	
-            }
-        });
+		addMouseListener(mouseListener);
+		addMouseMotionListener(mouseListener);
 	}
 	
 	public void paintComponent(Graphics g) {

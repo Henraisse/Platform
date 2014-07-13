@@ -179,10 +179,10 @@ public class Unit {
 	}
 	
 	public boolean isWithinBounds(Position a, Position b){
-		if((pos.x < a.x && pos.x > b.x) && (pos.y < a.y && pos.y > b.y)){return true;}
-		if((pos.x < a.x && pos.x > b.x) && (pos.y < b.y && pos.y > b.y)){return true;}
+		if((pos.x < a.x && pos.x > b.x) && (pos.y < a.y && pos.y > b.y)){return true;}						
 		if((pos.x < b.x && pos.x > a.x) && (pos.y < a.y && pos.y > b.y)){return true;}
 		if((pos.x < b.x && pos.x > a.x) && (pos.y < b.y && pos.y > a.y)){return true;}
+		if((pos.x < a.x && pos.x > b.x) && (pos.y > a.y && pos.y < b.y)){return true;}
 				
 		return false;
 	}

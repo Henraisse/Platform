@@ -17,6 +17,8 @@ public class Player {
 	public Position mouseDownPos = new Position(0,0);
 	public Position mouseUpPos = new Position(0,0);
 	public int mouseDownButton = -9999;
+	public Position mousePos = new Position(0,0);
+	public boolean mouseSelection = false;
 	
 	public Player(int i){
 		number = i;
