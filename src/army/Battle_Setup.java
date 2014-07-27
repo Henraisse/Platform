@@ -3,6 +3,7 @@ package army;
 
 import game.Map;
 import gui.Image_Pack;
+import gui.SoundPlayer;
 
 import java.util.ArrayList;
 
@@ -14,10 +15,11 @@ import tools.Projectile;
 public class Battle_Setup {
 	
 	
+	
 	public Variables variables;
 	public Map map;
 	public Game game;
-	
+	public SoundPlayer sp;
 	int[] teams = new int[2];
 	public ArrayList<Soldier> soldiers;
 	public ArrayList<Projectile> projectiles;
@@ -33,6 +35,7 @@ public class Battle_Setup {
 		map = mappi;
 		this.game = game;
 		
+		sp = new SoundPlayer(path);
 	}
 	
 	public void simulationStep(int counter){

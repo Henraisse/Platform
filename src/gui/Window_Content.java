@@ -42,7 +42,7 @@ public class Window_Content {
         
         while(true){
         	try {
-        	    Thread.sleep(50);
+        	    Thread.sleep(bs.game.loopSleepTime);
         	} catch(InterruptedException ex) {
         	    Thread.currentThread().interrupt();
         	}

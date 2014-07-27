@@ -1,6 +1,7 @@
 package army;
 
 import game.Square;
+import gui.SoundPlayer;
 
 import java.util.ArrayList;
 
@@ -21,10 +22,15 @@ public class Unit {
 	public boolean isMoving = false;
 	public boolean isFiring = false;
 	public boolean targetFound = false;
+	public boolean isReloading = false;
 	
 	public int allegiance;
 	public int appearence;
 	public Weapon armament;
+	public int clipAmmo;
+	public int totalAmmo = 2000;
+	public int counterStart = 0;
+	
 	public Battle_Setup battle_setup;
 	
 	public Soldier targetUnit;
@@ -34,15 +40,19 @@ public class Unit {
 	Visual_Effect fireEffect;
 	Visual_Effect deathEffect;
 	
+	public int attackCounter = 0;
 	public int fireimagecounter = 0;
 	public int walkimagecounter = 0;
 	public int idleimagecounter = 0;
 	public int imgCount = 0;
 	
+	public SoundPlayer sp;
+	
 	int size;
 	int sight = 10000;
 	
-	public Unit(){}
+	public Unit(){
+	}
 	
 	public ArrayList<Soldier> scanVicinity(){
 		ArrayList<Soldier> content = new ArrayList<Soldier>();
@@ -109,7 +119,16 @@ public class Unit {
 	}
 	
 	
-	public void attackTarget(){
+	public void attackTarget(int counter){
+		
+		//if(armament.name.equals("AK47")){
+		
+		//}
+		
+//		if(armament.name.equals("USP")){
+//			sp.sound(7);
+//		}
+		
 		boolean found = true;
 		if(targetUnit.health <= 0){
 			found = findClosestEnemy();						
@@ -117,14 +136,54 @@ public class Unit {
 		if(found == true && targetUnit.health > 0){
 			setTarget();
 			if(target.distance(pos) <= armament.range){
-				targetUnit.takeDamage(armament);
-				isFiring = true;
-				battle_setup.projectiles.add(new Projectile(pos, target, armament));
+				if(clipAmmo > 0){
+					clipAmmo--;
+					sp.playSound(armament.name + "_fire");
+					targetUnit.takeDamage(armament);			
+					isFiring = true;
+					if(armament.range > 50){
+						battle_setup.projectiles.add(new Projectile(pos, target, armament));
+					}
+				}
+				else{
+					isReloading = true;
+					counterStart = counter;
+				}
 			}
 			else{isFiring = false;}
 		}
 		else{isFiring = false;}
 	}
+	
+	
+	public void reload(int i) {
+		if(i == 10){
+//			if(armament.name.equals("AK47")){
+//				sp.sound(4);
+//			}
+			sp.playSound(armament.name + "_load1");
+		}
+		else if(i == 30){
+//				if(armament.name.equals("AK47")){
+//					sp.sound(5);
+//				}
+			sp.playSound(armament.name + "_load2");
+		}
+		else if(i == 50){
+//				if(armament.name.equals("AK47")){
+//					sp.sound(6);
+//				}
+			sp.playSound(armament.name + "_load3");
+
+		}
+		else if(i >= 70){
+			isReloading = false;
+			totalAmmo -= armament.clipCapacity;
+			clipAmmo += armament.clipCapacity;
+		}
+		
+	}
+	
 	
 	public boolean validateTarget(Soldier s){
 		if(s.allegiance == allegiance){return false;}
@@ -146,9 +205,13 @@ public class Unit {
 		}
 	}
 	
-	public void liveOrDie(){
+	public void liveOrDie(String type){
 		if(health <= 0 && isDead == false){
 			isDead = true;
+			//System.out.println("FIRE start");
+//			sp.sound(3);
+			sp.playSound(type + "_die");
+			//System.out.println("FIRE off");
 			battle_setup.effects.add(new Effect(pos.x, pos.y, deathEffect.name, battle_setup));
 		}
 	}
@@ -156,6 +219,7 @@ public class Unit {
 	public boolean targetIsWithinRange(){
 		if(targetUnit == null){return false;}
 		if(targetUnit.pos.distance(pos) > armament.range){return false;}
+		if(targetUnit.isDead == true){return false;}
 		return true;
 	}
 	
